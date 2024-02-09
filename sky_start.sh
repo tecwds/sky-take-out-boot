@@ -18,6 +18,12 @@ echo "SKY_HOME = $SKY_HOME"
 echo "设置环境变量"
 export SKY_HOME=$SKY_HOME
 
+if [ -d "$SKY_HOME" ]; then
+  echo "文件夹存在, 忽略"
+else
+  echo "创建文件夹"
+  mkdir -p "$SKY_HOME"
+fi
 
 # 2. 复制文件
 cp -ur ./mysql "$SKY_HOME"
