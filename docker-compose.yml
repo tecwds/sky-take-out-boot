@@ -78,7 +78,7 @@ services:
     # 赋予容器操作文件/文件夹的权限, 一般制定了 volumes 都可以加上, 无特殊需求则设置为 true
     privileged: true
     command:
-      - redis-server /usr/local/etc/redis/redis.conf
+      - /usr/local/bin/redis-server /usr/local/etc/redis/redis.conf
 # docker 网络
 # 定义之后容器之间可以使用服务名[container_name]进行访问
 networks:
