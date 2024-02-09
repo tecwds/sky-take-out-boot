@@ -72,13 +72,13 @@ services:
       sky_net:
     # 挂载数据
     volumes:
-      - $SKY_HOME/redis/conf:/usr/local/etc/redis
-      - $SKY_HOME/redis/data:/data
-      - $SKY_HOME/redis/logs:/logs
+      - $SKY_HOME/redis/conf:/usr/local/etc/redis/conf
+      - $SKY_HOME/redis/data:/usr/local/etc/redis/data
+      - $SKY_HOME/redis/logs:/usr/local/etc/redis/logs
     # 赋予容器操作文件/文件夹的权限, 一般制定了 volumes 都可以加上, 无特殊需求则设置为 true
     privileged: true
     command:
-      - /usr/local/bin/redis-server /usr/local/etc/redis/redis.conf
+      - redis-server /usr/local/etc/redis/conf/redis.conf
 # docker 网络
 # 定义之后容器之间可以使用服务名[container_name]进行访问
 networks:
