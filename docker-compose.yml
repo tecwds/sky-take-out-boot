@@ -1,0 +1,85 @@
+# compose 版本指定, 一般在 3 以上
+version: "3"
+
+services:
+  # nginx
+  nginx:
+    # 使用最新镜像
+    image: nginx
+    # 下面注释的参数指定容器名称，对应 --name=[容器名称]
+    container_name: sky_nginx
+    # 开放端口
+    ports:
+      - "8080:80"
+    # 重启模式: 总是重启
+    # restart: always
+    networks:
+      # 注意后面有冒号 [:]
+      # [自定义网络名称]:
+      sky_net:
+    # 挂载数据
+    volumes:
+      - $SKY_HOME/nginx/conf/nginx.conf:/etc/nginx/nginx.conf
+      - $SKY_HOME/nginx/html:/usr/share/nginx/html
+    # 赋予容器操作文件/文件夹的权限, 一般制定了 volumes 都可以加上, 无特殊需求则设置为 true
+    privileged: true
+
+# 分割线 ========================================================================
+  # mysql
+  mysql:
+    # 使用 mysql:5.7
+    # --> docker pull mysql:5.7
+    image: mysql:5.7
+    # 下面注释的参数指定容器名称，对应 --name=[容器名称]
+    container_name: sky_mysql
+    # 开放端口
+    ports:
+      - "3306:3306"
+    # 重启模式: 总是重启
+    # restart: always
+    networks:
+      # 注意后面有冒号 [:]
+      # [自定义网络名称]:
+      sky_net:
+    # 挂载数据
+    volumes:
+      - $SKY_HOME/mysql/conf:/etc/mysql/conf.d
+      - $SKY_HOME/mysql/data:/var/lib/mysql
+      - $SKY_HOME/mysql/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    environment:
+      # mysql root 默认的密码
+      - MYSQL_ROOT_PASSWORD=root
+    # 赋予容器操作文件/文件夹的权限, 一般制定了 volumes 都可以加上, 无特殊需求则设置为 true
+    privileged: true
+
+# 分割线 ========================================================================
+  # redis
+  redis:
+    # 使用 mysql:5.7
+    # --> docker pull mysql:5.7
+    # alpine: 轻量安全的 linux 镜像
+    image: redis:6.0.8-alpine
+    # 下面注释的参数指定容器名称，对应 --name=[容器名称]
+    container_name: sky_redis
+    # 开放端口
+    ports:
+      - "6379:6379"
+    # 重启模式: 总是重启
+    # restart: always
+    networks:
+      # 注意后面有冒号 [:]
+      # [自定义网络名称]:
+      sky_net:
+    # 挂载数据
+    volumes:
+      - $SKY_HOME/redis/conf:/usr/local/etc/redis
+      - $SKY_HOME/redis/data:/data
+      - $SKY_HOME/redis/logs:/logs
+    # 赋予容器操作文件/文件夹的权限, 一般制定了 volumes 都可以加上, 无特殊需求则设置为 true
+    privileged: true
+    command:
+      - redis-server /usr/local/etc/redis/redis.conf
+# docker 网络
+# 定义之后容器之间可以使用服务名[container_name]进行访问
+networks:
+  sky_net:
