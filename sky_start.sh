@@ -34,6 +34,9 @@ cp -ur ./redis "$SKY_HOME"
 unzip "$SKY_HOME"/nginx/html.zip
 mv "$SKY_HOME"/nginx/html.zip /tmp
 
+# 2.2 设置文件权限
+chmod a+r "$SKY_HOME"/redis/conf/redis.conf
+
 # 3. 检查
 docker-compose config -q
 docker-compose up -d
