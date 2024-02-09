@@ -31,7 +31,7 @@ cp -ur ./nginx "$SKY_HOME"
 cp -ur ./redis "$SKY_HOME"
 
 # 2.1 解压文件
-unzip "$SKY_HOME"/nginx/html.zip
+unzip "$SKY_HOME"/nginx/html.zip "$SKY_HOME"/nginx/
 mv "$SKY_HOME"/nginx/html.zip /tmp
 
 # 2.2 设置文件权限
