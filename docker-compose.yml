@@ -57,8 +57,7 @@ services:
   redis:
     # 使用 mysql:5.7
     # --> docker pull mysql:5.7
-    # alpine: 轻量安全的 linux 镜像
-    image: redis:6.0.8-alpine
+    image: redis:6.0.8
     # 下面注释的参数指定容器名称，对应 --name=[容器名称]
     container_name: sky_redis
     # 开放端口
